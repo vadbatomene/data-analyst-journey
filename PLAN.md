@@ -1,8 +1,8 @@
 # Plan de formation Data Analyst
 
 ## Phase 1 : SQL
-- [ ] SELECT, WHERE, ORDER BY
-- [ ] GROUP BY, HAVING
+- [x] SELECT, WHERE, ORDER BY
+- [x] GROUP BY, HAVING
 - [ ] Jointures
 - [ ] Sous-requêtes et CTE
 - [ ] Fonctions de fenêtrage
