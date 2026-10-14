@@ -3,7 +3,7 @@
 ## Phase 1 : SQL
 - [x] SELECT, WHERE, ORDER BY
 - [x] GROUP BY, HAVING
-- [ ] Jointures
+- [x] Jointures
 - [ ] Sous-requêtes et CTE
 - [ ] Fonctions de fenêtrage
 - [ ] Projet : analyse d'une base de ventes
