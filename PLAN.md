@@ -4,7 +4,7 @@
 - [x] SELECT, WHERE, ORDER BY
 - [x] GROUP BY, HAVING
 - [x] Jointures
-- [ ] Sous-requêtes et CTE
+- [x] Sous-requêtes et CTE
 - [ ] Fonctions de fenêtrage
 - [ ] Projet : analyse d'une base de ventes
 
