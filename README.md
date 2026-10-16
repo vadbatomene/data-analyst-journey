@@ -10,7 +10,7 @@ Devenir data analyst en maîtrisant SQL, Excel, Python, les statistiques et la B
 
 | Phase | Thème | Durée estimée | Durée réelle | Avancement | Statut |
 |-------|-------|---------------|--------------|------------|--------|
-| 1 | SQL | 2 à 3 mois | Depuis le 14 oct. 2026 | 5 / 18 | En cours |
+| 1 | SQL | 2 à 3 mois | Depuis le 14 oct. 2026 | 8 / 18 | En cours |
 | 2 | Excel / Google Sheets | 1 mois | - | 0 / 12 | À venir |
 | 3 | Python (pandas, visualisation, analyses) | 3 mois | - | 0 / 19 | À venir |
 | 4 | Statistiques | 2 mois | - | 0 / 14 | À venir |
@@ -29,6 +29,7 @@ Le détail case par case est dans [PLAN.md](PLAN.md).
 | 3 | Jointures (INNER JOIN, LEFT JOIN) | [PDF](01-sql/notes/Note_Seance_SQL_03_2026-10-14.pdf) |
 | 4 | Sous-requêtes et CTE | [PDF](01-sql/notes/Note_Seance_SQL_04_2026-10-15.pdf) |
 | 5 | Fonctions de fenêtrage | [PDF](01-sql/notes/Note_Seance_SQL_05_2026-10-16.pdf) |
+| 6 | CASE WHEN, Date, Texte | [PDF](01-sql/notes/Note_Seance_SQL_06_2026-10-16.pdf) |
 
 ## Structure du dépôt
 

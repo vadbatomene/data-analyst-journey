@@ -10,9 +10,9 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] Jointures (INNER JOIN, LEFT JOIN)
 - [x] Sous-requêtes et CTE
 - [x] Fonctions de fenêtrage (ROW_NUMBER, RANK, SUM OVER, LAG, LEAD, NTILE)
-- [ ] CASE WHEN
-- [ ] Dates (YEAR, MONTH, DATE_FORMAT, DATEDIFF)
-- [ ] Texte (LIKE, CONCAT, UPPER, TRIM, SUBSTRING)
+- [x] CASE WHEN
+- [x] Dates (YEAR, MONTH, DATE_FORMAT, DATEDIFF)
+- [x] Texte (LIKE, CONCAT, UPPER, TRIM, SUBSTRING)
 - [ ] DISTINCT et COUNT(DISTINCT)
 - [ ] BETWEEN, IS NULL, NULLIF, CAST
 - [ ] UNION et UNION ALL
