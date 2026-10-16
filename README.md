@@ -4,37 +4,51 @@ Journal public de ma formation au métier de data analyst. J'y documente ma prog
 
 ## Objectif
 
-Devenir data analyst en maîtrisant SQL, Excel, Python, les statistiques et la BI, et en construisant un portfolio de projets concrets.
+Devenir data analyst en maîtrisant SQL, Excel, Python, les statistiques et la BI, et en construisant un portfolio de projets concrets. Durée prévue : environ 12 mois.
 
 ## Progression
 
-| Phase | Thème | Statut |
-|-------|-------|--------|
-| 1 | SQL | En cours |
-| 2 | Excel / Google Sheets | À venir |
-| 3 | Python (pandas, visualisation) | À venir |
-| 4 | Statistiques | À venir |
-| 5 | BI et data visualisation | À venir |
-| 6 | Portfolio et recherche d'emploi | À venir |
+| Phase | Thème | Durée estimée | Avancement | Statut |
+|-------|-------|---------------|------------|--------|
+| 1 | SQL | 2 à 3 mois | 5 / 18 | En cours |
+| 2 | Excel / Google Sheets | 1 mois | 0 / 12 | À venir |
+| 3 | Python (pandas, visualisation, analyses) | 3 mois | 0 / 19 | À venir |
+| 4 | Statistiques | 2 mois | 0 / 14 | À venir |
+| 5 | BI et data visualisation | 1 à 2 mois | 0 / 13 | À venir |
+| 6 | Portfolio et recherche d'emploi | 2 mois | 0 / 10 | À venir |
+| - | Compétences transversales | En continu | 0 / 7 | En continu |
 
-Le détail est dans [PLAN.md](PLAN.md).
+Le détail case par case est dans [PLAN.md](PLAN.md).
+
+## Séances réalisées
+
+| Séance | Thème | Note |
+|--------|-------|------|
+| 1 | SELECT, WHERE, ORDER BY, LIMIT | [PDF](01-sql/notes/Note_Seance_SQL_01_2026-10-14.pdf) |
+| 2 | Agrégations, GROUP BY, HAVING | [PDF](01-sql/notes/Note_Seance_SQL_02_2026-10-14.pdf) |
+| 3 | Jointures (INNER JOIN, LEFT JOIN) | [PDF](01-sql/notes/Note_Seance_SQL_03_2026-10-14.pdf) |
+| 4 | Sous-requêtes et CTE | [PDF](01-sql/notes/Note_Seance_SQL_04_2026-10-15.pdf) |
+| 5 | Fonctions de fenêtrage | [PDF](01-sql/notes/Note_Seance_SQL_05_2026-10-16.pdf) |
 
 ## Structure du dépôt
 
-- `journal/` : une note par séance (vu, difficultés, exercices, suite)
-- `01-sql/` à `05-bi/` : exercices et projets de chaque phase
+- `journal/` : une note par jour de travail (vu, difficultés, exercices, suite)
+- `01-sql/` : exercices (`exercices/`) et notes de séance en PDF (`notes/`)
+- `02-excel/` à `05-bi/` : exercices et projets de chaque phase
 - `06-portfolio/` : projets de bout en bout
 - `PLAN.md` : plan de formation avec cases à cocher
 
 ## Outils
 
-SQL, Excel, Python, Git et GitHub. Power BI ou Tableau à venir.
+MySQL, Excel, Python, Git et GitHub. Power BI ou Tableau à venir.
 
-## Rythme
+## Méthode
 
-Séances régulières, avec une mise à jour du dépôt à la fin de chacune.
+- Une case est cochée seulement après avoir pratiqué la notion dans un exercice.
+- Chaque phase se termine par un projet.
+- Le dépôt est mis à jour à la fin de chaque séance.
 
 ## Contact
 
-mail : batomenevad7@gmail.com, batomenevad5@gmail.com
-phone-whatsapp : +243 812 229 495.
+Mail : batomenevad5@gmail.com
+Whatsapp : +243812229495
