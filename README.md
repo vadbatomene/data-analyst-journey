@@ -8,15 +8,15 @@ Devenir data analyst en maîtrisant SQL, Excel, Python, les statistiques et la B
 
 ## Progression
 
-| Phase | Thème | Durée estimée | Avancement | Statut |
-|-------|-------|---------------|------------|--------|
-| 1 | SQL | 2 à 3 mois | 5 / 18 | En cours |
-| 2 | Excel / Google Sheets | 1 mois | 0 / 12 | À venir |
-| 3 | Python (pandas, visualisation, analyses) | 3 mois | 0 / 19 | À venir |
-| 4 | Statistiques | 2 mois | 0 / 14 | À venir |
-| 5 | BI et data visualisation | 1 à 2 mois | 0 / 13 | À venir |
-| 6 | Portfolio et recherche d'emploi | 2 mois | 0 / 10 | À venir |
-| - | Compétences transversales | En continu | 0 / 7 | En continu |
+| Phase | Thème | Durée estimée | Durée réelle | Avancement | Statut |
+|-------|-------|---------------|--------------|------------|--------|
+| 1 | SQL | 2 à 3 mois | Depuis le 14 oct. 2026 | 5 / 18 | En cours |
+| 2 | Excel / Google Sheets | 1 mois | - | 0 / 12 | À venir |
+| 3 | Python (pandas, visualisation, analyses) | 3 mois | - | 0 / 19 | À venir |
+| 4 | Statistiques | 2 mois | - | 0 / 14 | À venir |
+| 5 | BI et data visualisation | 1 à 2 mois | - | 0 / 13 | À venir |
+| 6 | Portfolio et recherche d'emploi | 2 mois | - | 0 / 10 | À venir |
+| - | Compétences transversales | En continu | En continu | 0 / 7 | En continu |
 
 Le détail case par case est dans [PLAN.md](PLAN.md).
 
@@ -47,8 +47,10 @@ MySQL, Excel, Python, Git et GitHub. Power BI ou Tableau à venir.
 - Une case est cochée seulement après avoir pratiqué la notion dans un exercice.
 - Chaque phase se termine par un projet.
 - Le dépôt est mis à jour à la fin de chaque séance.
+- La durée réelle de chaque phase est notée pour comparer mon rythme au plan.
 
 ## Contact
 
-Mail : batomenevad5@gmail.com
+Mails : batomenevad7@gmail.com, batomenevad7@gmail.com
 Whatsapp : +243812229495
+
