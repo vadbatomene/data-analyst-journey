@@ -17,6 +17,8 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [ ] BETWEEN, IS NULL, NULLIF, CAST
 - [ ] UNION et UNION ALL
 - [ ] Self join
+- [x] Jointures multiples (3 tables ou plus)
+- [x] Jointures multiples (3 tables ou plus)
 - [ ] Modélisation (PRIMARY KEY, FOREIGN KEY, types de données, normalisation)
 - [ ] Vues (CREATE VIEW)
 - [ ] Index et EXPLAIN
