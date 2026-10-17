@@ -30,6 +30,7 @@ Le détail case par case est dans [PLAN.md](PLAN.md).
 | 4 | Sous-requêtes et CTE | [PDF](01-sql/notes/Note_Seance_SQL_04_2026-10-15.pdf) |
 | 5 | Fonctions de fenêtrage | [PDF](01-sql/notes/Note_Seance_SQL_05_2026-10-16.pdf) |
 | 6 | CASE WHEN, Date, Texte | [PDF](01-sql/notes/Note_Seance_SQL_06_2026-10-16.pdf) |
+| 6 bis | Compléments : ex æquo et jointures multiples | [PDF](01-sql/notes/Note_Complement_SQL_01_2026-10-16.pdf) |
 
 ## Structure du dépôt
 
