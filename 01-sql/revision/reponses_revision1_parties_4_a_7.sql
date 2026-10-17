@@ -12,39 +12,61 @@ USE formation;
 
 -- 4.1 [facile] Affiche les clients plus jeunes que l'âge moyen de tous les clients.
 
-
+SELECT * FROM clients WHERE age<(SELECT AVG(age) FROM clients);
 
 -- 4.2 [moyen] Affiche les commandes dont le montant dépasse la moyenne des montants.
 
-
+SELECT * FROM commandes WHERE montant>(SELECT AVG(montant) FROM commandes);
 
 -- 4.3 [moyen] Avec IN, affiche les prénoms des clients qui ont passé au moins une commande.
 
-
+SELECT prenom FROM clients WHERE id IN (SELECT client_id FROM commandes);
 
 -- 4.4 [moyen] Avec NOT IN, affiche les prénoms des clients qui n'ont passé aucune commande.
 
-
+SELECT prenom FROM clients WHERE id NOT IN (SELECT client_id FROM commandes);
 
 -- 4.5 [difficile] Avec un CTE, calcule le montant moyen des commandes par catégorie de produit, puis affiche les commandes (id, nom du produit, catégorie, montant) dont le montant dépasse la moyenne de leur catégorie.
 
-
+WITH moyen_cat AS (SELECT p.categorie, AVG(o.montant) as total
+	FROM produits p INNER JOIN commandes o ON p.id=o.produit_id
+    GROUP BY p.categorie)
+SELECT o.id, o.produit, p.categorie, o.montant, m.total
+	FROM commandes o 
+    INNER JOIN produits p ON o.produit_id=p.id
+    INNER JOIN moyen_cat m ON p.categorie=m.categorie
+    WHERE o.montant>m.total;
 
 -- 4.6 [difficile] Avec un CTE, affiche les clients dont la dépense totale dépasse 250.
 
-
+WITH depenses AS (
+	SELECT c.id, c.prenom, SUM(o.montant) as total
+		FROM clients c LEFT JOIN commandes o ON c.id=o.client_id
+        GROUP by c.id, c.prenom)
+	SELECT * FROM depenses WHERE total>250;
 
 -- 4.7 [difficile] Avec deux CTE enchaînés, affiche les clients dont la dépense totale est inférieure à la dépense moyenne par client (parmi ceux qui ont commandé).
 
-
+WITH clients_com as (
+		SELECT c.id, c.prenom, SUM(o.montant) as total
+		FROM clients c INNER JOIN commandes o ON c.id=o.client_id
+        GROUP by c.id, c.prenom),
+	moyennes AS (
+    SELECT AVG(total) AS moy FROM clients_com)
+SELECT cm.* FROM clients_com cm 
+CROSS JOIN moyennes m
+WHERE cm.total < m.moy;
 
 -- 4.8 [moyen] Avec une sous-requête sur la table villes, affiche les prénoms des clients qui habitent dans une ville de la province Haut-Katanga.
 
-
+SELECT prenom, ville
+FROM clients
+WHERE ville IN (SELECT ville FROM villes WHERE province='Haut-Katanga');
 
 -- 4.9 [difficile] Avec des sous-requêtes imbriquées (IN dans IN), affiche le nom et la catégorie des produits commandés par des clients de Kinshasa.
-
-
+SELECT nom, categorie FROM produits WHERE id IN (
+	SELECT id FROM commandes WHERE client_id IN (
+    SELECT id FROM clients WHERE ville='Kinshasa'));
 
 -- ------------------------------------------------------
 -- Partie 5 : fonctions de fenêtrage (séance 5)

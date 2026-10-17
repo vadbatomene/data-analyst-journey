@@ -75,4 +75,3 @@ classement_final as (SELECT province, categorie, total_vendu,
 RANK() OVER (PARTITION BY province ORDER BY total_vendu DESC) AS rang
 FROM classement)
 SELECT * FROM classement_final WHERE rang=1;
-
