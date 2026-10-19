@@ -74,39 +74,48 @@ SELECT nom, categorie FROM produits WHERE id IN (
 
 -- 5.1 [facile] Numérote les clients du plus âgé au plus jeune.
 
-
+SELECT *, ROW_NUMBER() OVER (ORDER BY age DESC) AS num_ordre FROM clients;
 
 -- 5.2 [moyen] Classe les clients par âge décroissant dans chaque province (jointure avec la table villes).
 
-
+SELECT c.id, c.prenom, c.age, v.province, RANK() OVER (PARTITION BY v.province ORDER BY c.age DESC) AS PROV_RANK FROM clients c INNER JOIN villes v ON c.ville=v.ville;
 
 -- 5.3 [moyen] Affiche chaque client avec l'âge moyen de sa ville.
 
-
+SELECT prenom, ville, AVG(age) OVER (PARTITION BY ville ORDER BY ville) AS age_moyen FROM clients;
 
 -- 5.4 [moyen] Affiche chaque commande avec le cumul des montants, par date de commande croissante.
 
-
+SELECT id, produit, montant, date_commande,
+       SUM(montant) OVER (ORDER BY date_commande, id) AS cumul
+FROM commandes;
 
 -- 5.5 [difficile] Affiche chaque commande avec le montant de la commande précédente (par date) et la différence entre les deux.
 
-
+SELECT *, LAG(montant) OVER (ORDER BY date_commande,id) AS mont_prec, montant-LAG(montant) OVER (ORDER BY date_commande,id) AS diff FROM commandes;
 
 -- 5.6 [difficile] Affiche la commande la plus chère de chaque client ayant commandé, avec le prénom du client, le nom et la catégorie du produit (CTE et ROW_NUMBER).
 
-
+WITH client_com AS (SELECT c.prenom, p.nom, p.categorie, o.montant, ROW_NUMBER() OVER (PARTITION BY c.id ORDER BY o.montant DESC) AS num_ordre
+FROM clients c INNER JOIN commandes o ON c.id=o.client_id
+INNER JOIN produits p ON o.produit_id=p.id)
+SELECT * FROM client_com WHERE num_ordre=1;
 
 -- 5.7 [difficile] Affiche chaque commande avec son pourcentage du total de sa catégorie de produit, arrondi à 2 décimales (PARTITION BY la catégorie).
 
+SELECT o.id, p.nom, p.categorie, ROUND(o.montant * 100.00 / SUM(o.montant) OVER (PARTITION BY p.categorie) ,2) AS total FROM commandes o INNER JOIN  produits p ON p.id=o.produit_id ORDER BY o.id;
 
 
 -- 5.8 [difficile] Répartis les clients en 2 groupes d'âge avec NTILE(2) et affiche le groupe de chaque client.
 
-
+SELECT *, NTILE(2) OVER (ORDER BY age) AS groupe_age FROM clients;
 
 -- 5.9 [difficile] Pour chaque province, classe les clients selon leur dépense totale (0 pour ceux qui n'ont rien commandé) avec RANK. Que se passe-t-il pour les deux clients de Nord-Kivu ?
 
-
+WITH cli_prov AS (SELECT c.prenom, v.province, coalesce(SUM(o.montant),0) AS total
+FROM clients c LEFT JOIN commandes o ON c.id=o.client_id
+LEFT JOIN villes v ON c.ville=v.ville GROUP BY c.prenom, v.province)
+SELECT *, RANK() OVER (PARTITION BY province ORDER BY total DESC) FROM cli_prov;
 
 -- ------------------------------------------------------
 -- Partie 6 : CASE WHEN, dates et texte (séance 6)
