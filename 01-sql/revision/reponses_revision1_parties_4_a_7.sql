@@ -123,39 +123,51 @@ SELECT *, RANK() OVER (PARTITION BY province ORDER BY total DESC) FROM cli_prov;
 
 -- 6.1 [moyen] Ajoute à chaque commande une catégorie : moins de 100 = 'Petite', de 100 à 299 = 'Moyenne', 300 et plus = 'Grande'.
 
-
+SELECT *, CASE
+		WHEN montant<100 THEN 'Petite'
+        WHEN montant <300 THEN 'Moyenne'
+        ELSE 'Grande'
+        END AS categorie
+FROM commandes;
 
 -- 6.2 [difficile] Affiche le nombre de commandes et le montant total par catégorie (mêmes seuils qu'en 6.1).
 
-
+WITH cat AS (SELECT *, CASE
+		WHEN montant<100 THEN 'Petite'
+        WHEN montant <300 THEN 'Moyenne'
+        ELSE 'Grande'
+        END AS categorie
+FROM commandes)
+SELECT categorie, SUM(montant) as total, COUNT(*) as nb FROM cat GROUP BY categorie;
 
 -- 6.3 [moyen] Affiche le montant total des commandes par mois, au format AAAA-MM.
 
-
+SELECT DATE_FORMAT(date_commande, '%Y-%m') AS date_form, SUM(montant) as total FROM commandes GROUP BY date_form;
 
 -- 6.4 [moyen] Calcule le nombre de jours entre la première et la dernière commande.
 
-
+SELECT datediff(max(date_commande),min(date_commande)) FROM commandes;
 
 -- 6.5 [moyen] Affiche les commandes passées en février 2026.
 
-
+SELECT * FROM commandes WHERE DATE_FORMAT(date_commande, '%Y-%m')='2026-02';
 
 -- 6.6 [moyen] Affiche les clients dont le prénom se termine par la lettre e.
 
-
+SELECT * FROM clients WHERE prenom LIKE '%e';
 
 -- 6.7 [moyen] Affiche chaque client sous la forme PRENOM - ville (prénom en majuscules, ville en minuscules).
 
-
+SELECT CONCAT(UPPER(prenom),' - ',LOWER(ville)) FROM clients;
 
 -- 6.8 [difficile] Affiche les prénoms de exactement 4 lettres, avec leur ville.
 
-
+SELECT prenom, ville FROM clients WHERE LENGTH(prenom)=4;
 
 -- 6.9 [difficile] Affiche le montant total des commandes par mois (AAAA-MM) et par catégorie de produit.
 
-
+SELECT DATE_FORMAT(o.date_commande, '%Y-%m') as datform, p.categorie, SUM(o.montant) AS total 
+FROM commandes o INNER JOIN produits p ON o.produit_id=p.id GROUP BY datform, categorie ORDER BY datform, categorie;
 
 -- 6.10 [moyen] Affiche chaque produit sous la forme NOM (categorie), avec le nom en majuscules. Exemple : TELEPHONE (Electronique).
 
