@@ -171,7 +171,7 @@ FROM commandes o INNER JOIN produits p ON o.produit_id=p.id GROUP BY datform, ca
 
 -- 6.10 [moyen] Affiche chaque produit sous la forme NOM (categorie), avec le nom en majuscules. Exemple : TELEPHONE (Electronique).
 
-
+SELECT CONCAT(UPPER(nom),' (', categorie, ')') FROM produits;
 
 -- ------------------------------------------------------
 -- Partie 7 : synthèse (questions métier avec les 4 tables)
@@ -179,28 +179,63 @@ FROM commandes o INNER JOIN produits p ON o.produit_id=p.id GROUP BY datform, ca
 
 -- 7.1 [difficile] Affiche, pour chaque ville de la table villes, le nombre de commandes et le montant total, avec 0 pour une ville sans commande.
 
-
+SELECT v.ville,
+       COUNT(o.id) AS nb_commandes,
+       COALESCE(SUM(o.montant), 0) AS montant_total
+FROM villes v
+LEFT JOIN clients c ON c.ville = v.ville
+LEFT JOIN commandes o ON o.client_id = c.id
+GROUP BY v.ville;
 
 -- 7.2 [difficile] Classe les clients ayant commandé selon leur dépense totale, avec leur rang (RANK).
 
-
+SELECT c.prenom, SUM(o.montant) as total, RANK() OVER (ORDER BY SUM(o.montant) DESC) as RANG 
+FROM clients c INNER JOIN commandes o ON c.id=o.client_id 
+GROUP BY c.prenom; 
 
 -- 7.3 [difficile] Affiche, pour chaque mois, le total des commandes et son pourcentage du total de toutes les commandes (2 décimales).
 
-
+WITH moistot AS (SELECT DATE_FORMAT(date_commande, '%Y-%m') AS mois, SUM(montant) as total FROM commandes GROUP BY mois)
+SELECT *, ROUND(total * 100/(SELECT SUM(total) FROM moistot),2) as pourcentage FROM moistot;
 
 -- 7.4 [difficile] Affiche, pour chaque ville, le prénom du client qui a le plus dépensé (parmi ceux qui ont commandé).
 
-
+WITH groupville AS (
+    SELECT c.id, c.prenom, c.ville, SUM(o.montant) AS total
+    FROM clients c
+    INNER JOIN commandes o ON c.id = o.client_id
+    GROUP BY c.id, c.prenom, c.ville
+),
+classement AS (
+    SELECT *, RANK() OVER (PARTITION BY ville ORDER BY total DESC) AS rang
+    FROM groupville
+)
+SELECT ville, prenom, total
+FROM classement
+WHERE rang = 1;
 
 -- 7.5 [difficile] Affiche, pour chaque catégorie de produit, le prénom du client qui a le plus dépensé dans cette catégorie (clients connus uniquement).
 
-
+WITH tri_categorie as (SELECT c.prenom, p.categorie, SUM(o.montant) as total FROM clients c
+INNER JOIN commandes o ON c.id=o.client_id
+INNER JOIN produits p ON o.produit_id=p.id
+GROUP BY  c.prenom, p.categorie ORDER BY categorie) 
+SELECT * FROM (SELECT categorie, prenom, total, RANK() OVER (PARTITION BY categorie ORDER BY total DESC) RANG FROM tri_categorie) as arrangement WHERE rang=1;
 
 -- 7.6 [difficile] Tableau de bord mensuel : pour chaque mois (AAAA-MM), le chiffre d'affaires, le nombre de commandes et la variation du chiffre d'affaires par rapport au mois précédent.
 
-
+WITH sitglobal AS (SELECT DATE_FORMAT(date_commande, '%Y-%m') AS mois, SUM(montant) AS chiffre_d_affaires, COUNt(*) AS nb_commandes FROM commandes GROUP BY mois)
+SELECT *, chiffre_d_affaires-LAG(chiffre_d_affaires) OVER (ORDER BY mois) AS variation FROM sitglobal ORDER BY mois ;
 
 -- 7.7 [difficile] Pour chaque province et chaque catégorie de produit, affiche le montant total et sa part (en %, 2 décimales) dans le total de la province.
-
-
+WITH provcat AS (
+    SELECT v.province, p.categorie, SUM(o.montant) AS total
+    FROM commandes o
+    INNER JOIN clients c ON o.client_id = c.id
+    INNER JOIN villes v ON c.ville = v.ville
+    INNER JOIN produits p ON p.id = o.produit_id
+    GROUP BY v.province, p.categorie
+)
+SELECT province, categorie, total,
+       ROUND(total * 100.0 / SUM(total) OVER (PARTITION BY province), 2) AS pct_province
+FROM provcat;
