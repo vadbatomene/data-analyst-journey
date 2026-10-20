@@ -31,6 +31,7 @@ Le détail case par case est dans [PLAN.md](PLAN.md).
 | 5 | Fonctions de fenêtrage | [PDF](01-sql/notes/Note_Seance_SQL_05_2026-10-16.pdf) |
 | 6 | CASE WHEN, Date, Texte | [PDF](01-sql/notes/Note_Seance_SQL_06_2026-10-16.pdf) |
 | 6 bis | Compléments : ex æquo et jointures multiples | [PDF](01-sql/notes/Note_Complement_SQL_01_2026-10-16.pdf) |
+| Rév. 1 | Révision SQL (62 exercices, note 18,1 / 20) | [Bilan](01-sql/revision/Bilan_Revision_SQL_01.pdf) |
 
 ## Structure du dépôt
 
