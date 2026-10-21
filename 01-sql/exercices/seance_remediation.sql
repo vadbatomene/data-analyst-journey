@@ -68,10 +68,9 @@ GROUP BY c.id, c.prenom;
 
 -- C2 Pour chaque ville de la table villes : nombre de commandes de plus de 100 et leur montant total (0 si aucune).
 
-SELECT c.ville, COUNT(o.id) AS nb_commandes, SUM(o.montant) as total
+SELECT c.ville, COUNT(o.id) AS nb_commandes, COALESCE (SUM(o.montant),0) as total
 FROM clients c 
-LEFT JOIN commandes o ON o.client_id=c.id 
-WHERE o.montant>100
+LEFT JOIN commandes o ON o.client_id=c.id AND o.montant>100
 GROUP BY c.ville;
 
 -- ------------------------------------------------------
@@ -94,9 +93,9 @@ FROM clients c
 INNER JOIN commandes o ON c.id=o.client_id) as sum_client ,
 
 (SELECT SUM(montant)
-FROM commandes o
-LEFT JOIN clients c ON o.client_id = c.id
-LEFT JOIN villes v ON c.ville=v.ville) as sum_prov)
+FROM villes p
+INNER JOIN clients c ON p.ville = c.ville
+INNER JOIN commandes o ON o.client_id=c.id) as sum_prov)
 SELECT *, sum_prov-sum_client as difference FROM tempo ; 
 
 -- D3 Cette requête est fausse. Lance-la, explique pourquoi les totaux sont faux, puis corrige-la.
@@ -134,7 +133,9 @@ SELECT * FROM prov_tot WHERE total > (SELECT * FROM moyen_prov_tot);
 
 -- E2 Affiche les commandes de plus de 30 (strictement), triées de la plus récente à la plus ancienne, avec la date au format JJ/MM/AAAA.
 
--- En tout cas je ne comprends pas plus de 30
+SELECT id, produit, montant, DATE_FORMAT(date_commande, '%d/%m/%Y') as datecommande 
+FROM commandes WHERE montant>30 
+ORDER BY date_commande DESC;
 
 -- ------------------------------------------------------
 -- Bloc F : exercices de contrôle (sans regarder la correction)
@@ -142,7 +143,7 @@ SELECT * FROM prov_tot WHERE total > (SELECT * FROM moyen_prov_tot);
 
 -- F1 (variante du 7.1) Pour chaque province : nombre de commandes et montant total, 0 si aucune.
 
-SELECT v.province, COUNT(o.id) AS nb_commandes
+SELECT v.province, COUNT(o.id) AS nb_commandes, COALESCE(SUM(o.montant), 0) as total
 	FROM villes v
 	LEFT JOIN clients c ON c.ville = v.ville
     LEFT JOIN commandes o ON c.id = o.client_id
@@ -155,7 +156,7 @@ RANK() OVER (PARTITION BY c.ville ORDER BY SUM(o.montant)) as rang
 FROM clients c
 INNER JOIN commandes o ON c.id=o.client_id
 GROUP BY c.id, c.prenom, c.ville)
-SELECT ville, Total FROM commande_range WHERE rang=1;
+SELECT prenom, ville, Total FROM commande_range WHERE rang=1;
 
 -- F3 (variante du 7.7) Pour chaque catégorie de produit : la part (%) de chaque province dans le total de la catégorie.
 
