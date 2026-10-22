@@ -14,10 +14,10 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] Dates (YEAR, MONTH, DATE_FORMAT, DATEDIFF)
 - [x] Texte (LIKE, CONCAT, UPPER, TRIM, SUBSTRING)
 - [x] Jointures multiples (3 tables ou plus)
-- [ ] DISTINCT et COUNT(DISTINCT)
-- [ ] BETWEEN, IS NULL, NULLIF, CAST
-- [ ] UNION et UNION ALL
-- [ ] Self join
+- [x] DISTINCT et COUNT(DISTINCT)
+- [x] BETWEEN, IS NULL, NULLIF, CAST
+- [x] UNION et UNION ALL
+- [x] Self join
 - [ ] Modélisation (PRIMARY KEY, FOREIGN KEY, types de données, normalisation)
 - [ ] Vues (CREATE VIEW)
 - [ ] Index et EXPLAIN
