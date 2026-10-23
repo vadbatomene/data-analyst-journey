@@ -71,3 +71,7 @@ VALUES (9, 'Vad', 'Kinshasa', 29, '0812229495');
 -- equipe.manager_id vers manager.id
 -- Et anciens_clients : pourquoi une clé étrangère vers villes y poserait-elle problème ? Indice : la ville Kisangani.
 -- La ville de kisangani n'existe pas dans villes
+
+DROP TABLE IF EXISTS commandes_copie;
+DELETE FROM clients WHERE id = 9;
+SELECT COUNT(*) FROM clients;      -- doit afficher 8
