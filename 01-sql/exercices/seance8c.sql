@@ -30,19 +30,19 @@ SELECT DISTINCT ville_client, province_client FROM ventes_plat ORDER BY 1, 2;
 -- 3.Anomalies d’insertion et de suppression (en commentaire) : (
 -- a) peut-on enregistrer un nouveau produit « Imprimante » sans vente ? non
 --  Qu’est-ce qu’il faudrait inventer ? une table où repertorier tous les produits
--- (b) si on supprime la vente 3, quelles informations disparaissent ?  oui
+-- (b) si on supprime la vente 3, quelles informations disparaissent ?  il y aura le client qui est à lubumbashi, sa province Haut-Katanga et le produit ordinateur qui seront supprimés de données
 -- Résultat : (b) le seul client de Lubumbashi, la province Haut-Katanga, le produit Ordinateur.
 
 -- 4.Normalise en créant quatre tables avec clés primaires, clés étrangères et NOT NULL :
 -- villes_n : ville (clé primaire), province
 CREATE TABLE villes_n (
 ville VARCHAR(50) PRIMARY KEY,
-province VARCHAR(50));
+province VARCHAR(50) NOT NULL);
 -- clients_n : id (numérotation automatique, clé primaire), prenom, ville (clé étrangère)
 CREATE TABLE clients_n (
 id INT PRIMARY KEY AUTO_INCREMENT,
-prenom VARCHAR(50),
-ville VARCHAR(50),
+prenom VARCHAR(50) NOT NULL,
+ville VARCHAR(50) NOT NULL,
  
  CONSTRAINT fk_clients_n_ville_n
  FOREIGN KEY (ville)
@@ -50,15 +50,15 @@ ville VARCHAR(50),
 -- produits_n : id (numérotation automatique, clé primaire), nom, categorie
 CREATE TABLE produits_n (
 id INT PRIMARY KEY AUTO_INCREMENT,
-nom VARCHAR(50),
-categorie VARCHAR(50));
+nom VARCHAR(50) NOT NULL,
+categorie VARCHAR(50) NOT NULL);
 -- ventes_n : id (clé primaire), client_id et produit_id (clés étrangères), montant (DECIMAL(10,2)), date_vente (DATE)
 CREATE TABLE ventes_n (
 id INT PRIMARY KEY,
-client_id INT,
-produit_id INT,
-montant DECIMAL(10,2),
-date_vente DATE,
+client_id INT NOT NULL,
+produit_id INT NOT NULL,
+montant DECIMAL(10,2) NOT NULL,
+date_vente DATE NOT NULL,
 
 CONSTRAINT fk_ventes_n_clients_n
 FOREIGN KEY (client_id)
@@ -100,4 +100,15 @@ INNER JOIN produits_n p ON v.produit_id=p.id;
 -- LA 3FN, car le nom du produit se repète, je dois normalement le lier avec un id produit à la place
 -- Sur la copie, retire-la et retrouve les noms par jointure :
 
--- je n'ai pas compris
+DROP TABLE IF EXISTS commandes_copie;
+CREATE TABLE commandes_copie LIKE commandes;
+INSERT INTO commandes_copie SELECT * FROM commandes;
+
+ALTER TABLE commandes_copie DROP COLUMN produit;
+SELECT o.id, p.nom AS produit, o.montant
+FROM commandes_copie o
+INNER JOIN produits p ON p.id = o.produit_id;
+
+-- VErification table clients
+DELETE FROM clients WHERE id = 9;
+SELECT COUNT(*) FROM clients;
