@@ -18,7 +18,7 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] BETWEEN, IS NULL, NULLIF, CAST
 - [x] UNION et UNION ALL
 - [x] Self join
-- [ ] Modélisation (PRIMARY KEY, FOREIGN KEY, types de données, normalisation)
+- [x] Modélisation (PRIMARY KEY, FOREIGN KEY, types de données, normalisation)
 - [ ] Vues (CREATE VIEW)
 - [ ] Index et EXPLAIN
 - [ ] UPDATE, DELETE, ALTER TABLE
