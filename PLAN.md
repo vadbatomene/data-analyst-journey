@@ -19,9 +19,9 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] UNION et UNION ALL
 - [x] Self join
 - [x] Modélisation (PRIMARY KEY, FOREIGN KEY, types de données, normalisation)
-- [ ] Vues (CREATE VIEW)
-- [ ] Index et EXPLAIN
-- [ ] UPDATE, DELETE, ALTER TABLE
+- [x] Vues (CREATE VIEW)
+- [x] Index et EXPLAIN
+- [x] UPDATE, DELETE, ALTER TABLE
 - [ ] Analyses métier en SQL : entonnoir de conversion, cohortes, segmentation RFM, évolution mois par mois
 - [ ] Projet : analyse d'une base de ventes
 
