@@ -22,7 +22,7 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] Vues (CREATE VIEW)
 - [x] Index et EXPLAIN
 - [x] UPDATE, DELETE, ALTER TABLE
-- [ ] Objets programmables (variables, procédures, fonctions, déclencheurs, événements)
+- [x] Objets programmables (variables, procédures, fonctions, déclencheurs, événements)
 - [ ] Analyses métier en SQL : entonnoir de conversion, cohortes, segmentation RFM, évolution mois par mois
 - [ ] Projet : analyse d'une base de ventes
 
