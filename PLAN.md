@@ -23,7 +23,7 @@ Règles : je coche une case seulement quand j'ai pratiqué la notion dans un exe
 - [x] Index et EXPLAIN
 - [x] UPDATE, DELETE, ALTER TABLE
 - [x] Objets programmables (variables, procédures, fonctions, déclencheurs, événements)
-- [ ] Analyses métier en SQL : entonnoir de conversion, cohortes, segmentation RFM, évolution mois par mois
+- [x] Analyses métier en SQL : entonnoir de conversion, cohortes, segmentation RFM, évolution mois par mois
 - [ ] Projet : analyse d'une base de ventes
 
 ## Phase 2 : Excel / Google Sheets (environ 1 mois)
