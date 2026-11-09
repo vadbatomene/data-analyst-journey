@@ -42,7 +42,7 @@
 | id | int | Identifiant unique de la livraison | unique, clé primaire,  obligatoire |
 | commande_id|  int |  Identifiant de la commande | lié à commandes, obligatoire |
 | transporteur | varchar(50) | La personne qui s'occupe de la livraison | obligatoire, à choisir entre Rapido Express,bTransCongo et KivuLogistics |
-| date_expedition | date | date de l'expedition de la commande | lié à commandes, obligatoire |
+| date_expedition | date | date de l'expedition de la commande | obligatoire |
 | date_livraison| date | date de la livraison | facultatif |
 | statut | varchar(20) | Etat de la livraison| obligatoire, à choisir entre livrée et en transit |
 
@@ -52,9 +52,8 @@
 |-------|-------|---------------|--------------|
 | id | int | Identifiant unique du produit | unique, clé primaire, obligatoire |
 | nom | varchar(50) | Nom du produit | obligatoire |
-| categorie_id |  Identifiant de la categorie | lié à categories, facultatif |
+| categorie_id | int | Identifiant de la categorie | lié à categories, facultatif |
 | prix| decimal(10,2) |prix unitaire du produit | oblgatoire superieur à 0 |
-
 
 ## 7.Table villes
 

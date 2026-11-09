@@ -39,7 +39,11 @@ GROUP by c.id, c.nom;
 
 -- 6.La répartition du nombre de lignes par commande.
 
-SELECT commande_id, COUNT(*) AS nb_ligne FROM lignes_commande GROUP BY commande_id;
+SELECT nb_lignes, COUNT(*) AS nb_commandes
+FROM (SELECT commande_id, COUNT(*) AS nb_lignes
+      FROM lignes_commande GROUP BY commande_id) t
+GROUP BY nb_lignes
+ORDER BY nb_lignes;
 
 -- 7. Pour chaque table, le nombre de valeurs vides (NULL) de chaque colonne (COUNT(*) - COUNT(colonne)).
 
