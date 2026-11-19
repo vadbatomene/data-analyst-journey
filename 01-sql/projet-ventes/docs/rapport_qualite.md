@@ -1,0 +1,3 @@
+| N° | Défaut | Table.colonne | Règle violée | Détection | Nombre | % | Gravité | Impact | Décision | Justification et Hypothèse |
+|-------|---------|------------------|-------|---------|------------------|-------|---------|------------------|---------|------------------|
+| D01 | Les clients qui ont le meme nom, ville, telephone  | clients.prenom, clients.ville, clients.telephone | le client doit être unique | Requete_1  | 50 |   3,27 | Forte  | Total par client, nombre de clients | créer une vue pour ne garder qu'un seul  | Garder les traces et avoir une information precise |
