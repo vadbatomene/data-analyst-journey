@@ -2,13 +2,22 @@ use congo_shop;
 
 -- 1.Clients en double : définis une règle de doublon (par exemple même prénom, même téléphone non vide et même ville), compte les groupes et les lignes concernées, et affiche des exemples.
 -- Règle : Les clients qui ont le meme nom, ville, telephone
-SELECT count(id) as nb, prenom, ville, telephone FROM clients
+SELECT count(id) as nb, prenom, ville, telephone FROM clients WHERE telephone IS NOT NULL AND TRIM(telephone)!=''
 GROUP BY prenom, ville, telephone
 HAVING nb>1;
+
+
+WITH doublons as (SELECT count(id) as nb, prenom, ville, telephone FROM clients WHERE telephone IS NOT NULL AND TRIM(telephone)!=''
+GROUP BY prenom, ville, telephone
+HAVING nb>1)
+SELECT count(nb) as nb_groupe, sum(nb) as nb_lignes FROM doublons;
+
+
 
 -- 2.Téléphones absents : compte les NULL et les chaînes vides, séparément.
 SELECT count(id) as nb_phone_null FROM clients WHERE telephone is NULL;
 SELECT count(id) as nb_phone_vide FROM clients WHERE telephone='';
+select  * from clients;
 
 -- 3.Produits sans catégorie : la liste complète, avec leur prix.
 SELECT id, nom, prix, categorie_id FROM produits WHERE categorie_id is NULL OR categorie_id="";
@@ -65,13 +74,22 @@ SELECT SUM(quantite*prix_unitaire) as SUM FROM lignes_commande WHERE quantite <=
 
 -- 7.Orphelins : 
 -- commandes sans client, 
-SELECT * FROM commandes WHERE client_id is null or client_id='';
+SELECT o.id, o.client_id, o.date_commande
+FROM commandes o
+LEFT JOIN clients c ON c.id = o.client_id
+WHERE c.id IS NULL;
 
 -- lignes sans commande ou sans produit, 
-SELECT * FROM lignes_commande WHERE produit_id IS NULL or produit_id='';
+SELECT l.id, l.commande_id, l.produit_id, l.quantite, l.prix_unitaire
+FROM lignes_commande l
+LEFT JOIN commandes c ON c.id=l.commande_id
+WHERE c.id is NULL ;
 
 -- livraisons sans commande.
-SELECT * FROM livraisons WHERE commande_id is NULL or commande_id='';
+SELECT l.id, l.commande_id, l.transporteur, l.date_expedition, l.date_livraison, l.statut
+FROM livraisons l
+LEFT JOIN commandes c ON c.id=l.commande_id
+WHERE c.id is NULL ;
 
 -- 8.Cohérence des dates : 
 -- commandes avant l’inscription du client, 
@@ -80,8 +98,13 @@ LEFT JOIN clients c ON o.client_id=c.id
 WHERE o.date_commande < c.date_inscription;
 
 -- dates hors de l’année 2025.
+SELECT * FROM clients WHERE DATE_FORMAT(date_inscription, '%Y') !=2025;
 SELECT * FROM commandes WHERE DATE_FORMAT(date_commande, '%Y') !=2025;
+SELECT * FROM livraisons WHERE DATE_FORMAT(date_expedition, '%Y') !=2025 OR DATE_FORMAT(date_livraison, '%Y') !=2025;
+
 -- 9.Textes douteux : prénoms vides, espaces en début ou en fin de texte, villes ou statuts hors des valeurs attendues.
+SELECT LENGTH('  abc ') <> LENGTH(TRIM('  abc '));
+
 SELECT *
 FROM clients
 WHERE prenom IS NULL
@@ -91,3 +114,9 @@ WHERE prenom IS NULL
    OR TRIM(ville) = ''
    OR ville <> TRIM(ville)
    OR ville NOT IN (SELECT DISTINCT ville FROM villes);
+   
+SELECT * FROM commandes WHERE statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut);
+SELECT * FROM livraisons WHERE transporteur is NULL
+OR TRIM(transporteur)='' OR transporteur != TRIM(transporteur)
+OR statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut);
+   
