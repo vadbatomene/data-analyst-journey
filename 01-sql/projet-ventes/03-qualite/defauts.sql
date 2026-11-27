@@ -65,6 +65,17 @@ SELECT * FROM livraisons WHERE date_livraison < date_expedition;
 SELECT * FROM livraisons WHERE statut='livrée' and date_livraison is null;
 SELECT * FROM livraisons WHERE statut='en transit' and date_livraison is not null;
 
+SELECT
+    l.commande_id,
+    l.date_livraison,
+    o.date_commande,
+    l.date_expedition
+FROM livraisons l
+INNER JOIN commandes o
+    ON o.id = l.commande_id
+WHERE l.date_livraison < o.date_commande
+  AND l.date_livraison < l.date_expedition;
+
 -- 6.Lignes de commande anormales : 
 -- quantités et prix négatifs ou nuls ; 
 SELECT * FROM lignes_commande WHERE quantite <=0 or prix_unitaire <=0;
@@ -85,6 +96,11 @@ FROM lignes_commande l
 LEFT JOIN commandes c ON c.id=l.commande_id
 WHERE c.id is NULL ;
 
+SELECT l.id, l.commande_id, l.produit_id, l.quantite, l.prix_unitaire
+FROM lignes_commande l
+LEFT JOIN produits p ON p.id=l.produit_id
+WHERE p.id is NULL ;
+
 -- livraisons sans commande.
 SELECT l.id, l.commande_id, l.transporteur, l.date_expedition, l.date_livraison, l.statut
 FROM livraisons l
@@ -100,7 +116,8 @@ WHERE o.date_commande < c.date_inscription;
 -- dates hors de l’année 2025.
 SELECT * FROM clients WHERE DATE_FORMAT(date_inscription, '%Y') !=2025;
 SELECT * FROM commandes WHERE DATE_FORMAT(date_commande, '%Y') !=2025;
-SELECT * FROM livraisons WHERE DATE_FORMAT(date_expedition, '%Y') !=2025 OR DATE_FORMAT(date_livraison, '%Y') !=2025;
+SELECT l.*, c.date_commande FROM livraisons l
+LEFT JOIN commandes c ON c.id=l.commande_id WHERE DATE_FORMAT(date_expedition, '%Y') !=2025 OR DATE_FORMAT(date_livraison, '%Y') !=2025;
 
 -- 9.Textes douteux : prénoms vides, espaces en début ou en fin de texte, villes ou statuts hors des valeurs attendues.
 SELECT LENGTH('  abc ') <> LENGTH(TRIM('  abc '));
@@ -115,8 +132,9 @@ WHERE prenom IS NULL
    OR ville <> TRIM(ville)
    OR ville NOT IN (SELECT DISTINCT ville FROM villes);
    
-SELECT * FROM commandes WHERE statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut);
+SELECT * FROM commandes WHERE statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut) OR statut NOT IN ('livrée', 'annulée', 'en cours');
 SELECT * FROM livraisons WHERE transporteur is NULL
 OR TRIM(transporteur)='' OR transporteur != TRIM(transporteur)
-OR statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut);
-   
+OR statut IS NULL OR TRIM(statut) = '' OR statut != TRIM(statut)
+OR transporteur NOT IN ('Rapido Express','TransCongo','KivuLogistics')
+;
